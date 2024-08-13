@@ -1,0 +1,43 @@
+@model ReservationListViewModel
+
+@if (TempData["ReservationDeleted"] != null)
+{
+    <p class="text-success">@TempData["ReservationDeleted"]</p>
+}
+
+@if (!Model.Reservations.Any())
+{
+    <p>No results</p>
+}
+else
+{
+    <table class="table table-condensed table-bordered">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Date and Time
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>@reservation.RestaurantName</td>
+                <td>@reservation.date</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@reservation.Id.ToString()">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@reservation.Id.ToString()">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<p>
+    <a class="btn btn-primary" asp-action="Add">Add new Reservation</a>
+</p>
